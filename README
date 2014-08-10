@@ -43,7 +43,6 @@ Run:
 2. The parameters can simply be out of order.
 3. There should not be an empty line from the stdin if it has not actually ended.
 
-
 Examples:
 
 1.  ./excutable -f test.trees -F 0 -t 0 -m 1000000 -e 0.01 -d 0 -l 100000000 -T 8 -o result.txt
@@ -94,7 +93,6 @@ Logs
 ====
 
 Aug 10, 2014:
-
 I have tested all the listed parameters and the results of the program as carefully as possible by now. There are no obvious errors in the present release version. Working bench is Ubuntu 13.10 with GCC 4.8.1.
 
 
