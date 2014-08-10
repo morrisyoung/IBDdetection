@@ -1,9 +1,9 @@
 Introduction
 ============
 
-This is the IBD segment extraction program. The input (from either files or stdin) target is pile of simulated phylogenetic trees in order along the chromosome, which are from exact one simulation case (one genealogy). So before calling this program, make sure that your input are exactly in one genealogy, and of course, in order. The program read trees by lines, and automatically judge which line is actually a tree.
+This is the IBD segment extraction program. The input (from either files or stdin) target is pile of simulated phylogenetic trees in order along the chromosome, which are from exact one simulation case (one genealogy). So before calling this program, make sure that your input are exactly in one genealogy, and of course, in order. The program reads trees by lines, and automatically judge which line is actually a tree.
 
-The underground algorithm of this release version is relatively simple and straightforward (compare tMRCAs along the chromosome for O(n^2) pairs, and if there is a longer enough true IBD segment, we report), but the implementation is very good (fast and memory efficient). It's basically writen in C from very scratch without any C++11 supportive libraries/third part libraries, so compiling and running should be very easy to go.
+The underlying algorithm of this release version is relatively simple and straightforward (compare tMRCAs along the chromosome for O(n^2) pairs, and if there is a longer enough true IBD segment, we report), but the implementation is very good (fast and memory efficient). It's basically writen in C from very scratch without any C++11 supportive libraries/third part libraries, so compiling and running should be very easy to go.
 
 There are several running parameters that you must specify for fear that there may be some potential errors in generating the results, or the program may crash.
 
@@ -39,10 +39,10 @@ Run:
 
 8. THREADS: You can specify the working threads by this parameter. The present limitation for the threading is 20, meaning you can't try a THREADS number larger than that.
 
-9. FILE_OUT: The output file name for the generated results. This is required no matter we read trees from tree file or stdin.
+9. FILE_OUT: The output file name for the generated results. This is required no matter you read trees from tree file or stdin.
 
 
-###notes:
+### notes:
 1. If you don't specify a required parameter, you will get a reminder and the program then terminates.
 2. The parameters can simply be out of order.
 3. There should not be an empty line from the stdin if it has not actually ended.
@@ -61,7 +61,7 @@ Use macs to generate the trees, and directly pipe them into the IBD extraction p
 
 4.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | tee newick.txt | ./excutable -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
 
-Use macs to generate the trees, and save the trees from it's stdout into a file called "newick.txt", at the same time pipe those trees into the stdin of our IBD extraction program.
+Use macs to generate the trees, and save the trees from it's stdout into a file called "newick.txt", and at the same time pipe those trees into the stdin of our IBD extraction program.
 
 
 Notes
@@ -69,11 +69,11 @@ Notes
 
 1. The best setting for "THREADS" is the number of your cores of PC/CPU node. Although it may need some extra consumption in total CPU time and memory usage, but if permitted, it is always preferrable that we can be faster in practice.
 
-2. Please don't try some strange parameters intentionally (like setting LENGTH_OF_CHROMOSOME as 100000000 but the actual one is 1000000, or setting CUTOFF even bigger than the LENGTH_OF_CHROMOSOME, or trying 8 THREADS but there are only 4 trees, etc.) to test how robust of this program in error detection and notification.
+2. Please don't try some strange parameters intentionally (like setting LENGTH_OF_CHROMOSOME as 100000000 but the actual one is 1000000, or setting CUTOFF even bigger than the LENGTH_OF_CHROMOSOME, or trying 8 THREADS but there are only 4 trees, etc.) to test how robust this program is in error detection and notification.
 
 3. Although the package contains the source codes of the implementation of an upgraded algorithm, it's not a release version. If you are really interesting in that algorithm and implementation, feel free to read the algorithm and source codes, and try that version.
 
-4. Presently we don't support the exponential format of the double number (for tMRCA in the trees). If in the future there is a need, it will be easy to update that part of the program ("double string_double(char *)" in "Naive_basic.cpp").
+4. Presently we don't support the exponential format of the <double> number (for tMRCA in the trees). If in the future there is a need, it will be easy to update that part of the program ("double string_double(char *)" in "Naive_basic.cpp").
 
 5. Also, we have not yet supported the exponential format of the program parameters (like -e EPSILON).
 
