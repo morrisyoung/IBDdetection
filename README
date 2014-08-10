@@ -90,13 +90,15 @@ We don't care about the other parts of a whole tree file, meaning we judge a tre
 
 But recognition of a tree for a line is only one thing. The other same important thing is that, the "Nexus" and "Newick" from these two simulators provide different marks for the present position in the chromosome. The "Nexus" provides the chromosome coordinate of the present coalescent event, but the "Newick" provides the segment length of the present coalescent event. This part of parsing is in "long int get_coordinate(char *)" of "Naive_basic.cpp".
 
-9. Of course you do not need to add new features to the program, because it may take you some time to get whole things work again. If there is a need, just send me a request and related examples, and I will do that if it's very tiny and won't change the structure of the whole program, and of course, is useful for your/other people's research.
+9. Of course you do not need to add new features to the program, because it may take you some time to get whole things work again. If there is a need, just send me a request and related examples as specifically as possible, and I will do that if it's very tiny and won't change the structure of the whole program, and of course, is useful for your/other people's research.
+
+10. Also, if you find some bugs, please reproduce your problems to me as specifically as possible, then I will fix it.
 
 
 Logs
 ====
 
-Aug 8, 2014:
+Aug 10, 2014:
 
 I have tested all the listed parameters and the results of the program as carefully as possible by now. There are no obvious errors in the present release version. Working bench is Ubuntu 13.10 with GCC 4.8.1.
 
