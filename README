@@ -45,15 +45,15 @@ Run:
 
 Examples:
 
-1.  ./excutable -f test.trees -F 0 -t 0 -m 1000000 -e 0.01 -d 0 -l 100000000 -T 8 -o result.txt
+1.  ./IBDdetection_naive -f test.trees -F 0 -t 0 -m 1000000 -e 0.01 -d 0 -l 100000000 -T 8 -o result.txt
 
-2.  ./excutable -l 1000000 -F 1 -m 100000 -t 0 -f newick.txt -e 0.000001 -T 8 -o result_newick.txt
+2.  ./IBDdetection_naive -l 1000000 -F 1 -m 100000 -t 0 -f newick.txt -e 0.000001 -T 8 -o result_newick.txt
 
-3.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | ./excutable -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
+3.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | ./IBDdetection_naive -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
 
 Use macs to generate the trees, and directly pipe them into the IBD extraction program. Please refer to the manual of macs for more information about its parameters.
 
-4.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | tee newick.txt | ./excutable -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
+4.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | tee newick.txt | ./IBDdetection_naive -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
 
 Use macs to generate the trees, and save the trees from it's stdout into a file called "newick.txt", and at the same time pipe those trees into the stdin of our IBD extraction program.
 
