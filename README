@@ -1,0 +1,113 @@
+Introduction
+============
+
+This is the IBD segment extraction program. The input (from either files or stdin) target is pile of simulated phylogenetic trees in order along the chromosome, which are from exact one simulation case (one genealogy). So before calling this program, make sure that your input are exactly in one genealogy, and of course, in order. The program read trees by lines, and automatically judge which line is actually a tree.
+
+The underground algorithm of this release version is relatively simple and straightforward (compare tMRCAs along the chromosome for O(n^2) pairs, and if there is a longer enough true IBD segment, we report), but the implementation is very good (fast and memory efficient). It's basically writen in C from very scratch without any C++11 supportive libraries/third part libraries, so compiling and running should be very easy to go.
+
+There are several running parameters that you must specify for fear that there may be some potential errors in generating the results, or the program may crash.
+
+
+Usage
+=====
+
+Requirements:
+g++
+
+
+Compile:
+make naive
+
+Run:
+./excutable -f TREE_FILE -F FORMAT -t TYPE -m CUTOFF -e EPSILON -d DISCRETIZATION -l LENGTH_OF_CHROMOSOME -T THREAD -o FILE_OUT
+
+
+1. TREE_FILE: This is the name of the tree file. If you choose to read trees from files, you must specify the file name. Otherwise (from stdin), you can simply ignore this parameter.
+
+2. FORMAT: This specifys the format of the tree. You must set this parameter when calling the program. 0 means "Nexus" format, and 1 means "Newick" format.
+
+3. TYPE: The source of the input trees. You must specify this parameter when running this program. 0 means tree file, and 1 means stdin.
+
+4. CUTOFF: The length cutoff value of true IBD segments, measured in unit of 1. If you don't set this parameter, it will be 0 by default.
+
+5. EPSILON: This is the tolerance for the tMRCA, meaning if |tMRCA1 - tMRCA2| <= EPSILON, we regard them as the same value. As our IBD detection program is based on comparing the tMRCAs of one sample pair among different trees, we need this parameter to avoid potential numerical errors brought by the tree generators (simulators). We recommend that you use the last but two digit as the tolerance, but it actually always depends on the numerical precision of the simulator.
+
+6. DISCRETIZATION: We will process trees every x base pairs, where the x is exactly this DISCRETIZATION value. This parameter can speed up the detection process at the cost of sacrificing some precision, and at the same time the number of trees will be constant other than increasing with n/N. It's measured in unit of 1 bp.
+
+
+7. LENGTH_OF_CHROMOSOME: This is the length of the chromosome that you simulated, in unit of 1. This is necessary, both because in Nexus tree processing, we don't have such information, and because we need this value to divide the trees for different working threads in multi-threads running environment. Please specify this parameter as exactly what it is in the simulator you used.
+
+8. THREADS: You can specify the working threads by this parameter. The present limitation for the threading is 20, meaning you can't try a THREADS number larger than that.
+
+9. FILE_OUT: The output file name for the generated results. This is required no matter we read trees from tree file or stdin.
+
+
+###notes:
+1. If you don't specify a required parameter, you will get a reminder and the program then terminates.
+2. The parameters can simply be out of order.
+
+
+Examples:
+
+1.  ./excutable -f test.trees -F 0 -t 0 -m 1000000 -e 0.01 -d 0 -l 100000000 -T 8 -o result.txt
+
+2.  ./excutable -l 1000000 -F 1 -m 100000 -t 0 -f newick.txt -e 0.000001 -T 8 -o result_newick.txt
+
+3.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | ./excutable -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
+
+Use macs to generate the trees, and directly pipe them into the IBD extraction program. Please refer to the manual of macs for more information about its parameters.
+
+
+4.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | tee newick.txt | ./excutable -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
+
+Use macs to generate the trees, and save the trees from it's stdout into a file called "newick.txt", at the same time pipe those trees into the stdin of our IBD extraction program.
+
+
+Notes
+=====
+
+1. The best setting for "THREADS" is the number of your cores of PC/CPU node. Although it may need some extra consumption in total CPU time and memory usage, but if permitted, it is always preferrable that we can be faster in practice.
+
+2. Please don't try some strange parameters intentionally (like setting LENGTH_OF_CHROMOSOME as 100000000 but the actual one is 1000000, or setting CUTOFF even bigger than the LENGTH_OF_CHROMOSOME, or trying 8 THREADS but there are only 4 trees, etc.) to test how robust of this program in error detection and notification.
+
+3. Although the package contains the source codes of the implementation of an upgraded algorithm, it's not a release version. If you are really interesting in that algorithm and implementation, feel free to read the algorithm and source codes, and try that version.
+
+4. Presently we don't support the exponential format of the double number (for tMRCA in the trees). If in the future there is a need, it will be easy to update that part of the program ("double string_double(char *)" in "Naive_basic.cpp").
+
+5. Also, we have not yet supported the exponential format of the program parameters (like -e EPSILON).
+
+6. If you want to read trees from stdin (piped input), you can only use the sequential version of the program (1 thread). So just set the (-T) as 1 in that case, or leave it alone (the default value is 1).
+
+7. Some of the parameters are not measured in units of 100M as usuall (like L and m). So type them into the command line correctly.
+
+8. As it's kind of hard to find a formal definition of the difference between "Nexus" and "Newick" tree file format, I use "fastsimcoal2" and "macs" simulators to see their difference (the program needs to distinguish tree or non-tree for a line). So presently, the two kinds of tree format are distinguished by the following method:
+
+"Nexus" (in "fastsimcoal2"): " tree...", meaning the 2, 3, 4, 5 positions of a line contain "t", "r", "e", "e" characters in order;
+"Newick" (in "macs"): "NEWICK...", meaning the 1, 2, 3, 4, 5, 6 positions of a line contains "N", "E", "W", "I", "C", "K" characters in order.
+
+We don't care about the other parts of a whole tree file, meaning we judge a tree in a line only by the above method. If you have other type of recognition/standards, please adjust/supplement the "int tree_judge(char *)" function in "Naive_basic.cpp" according to your need, which is not very hard.
+
+But recognition of a tree for a line is only one thing. The other same important thing is that, the "Nexus" and "Newick" from these two simulators provide different marks for the present position in the chromosome. The "Nexus" provides the chromosome coordinate of the present coalescent event, but the "Newick" provides the segment length of the present coalescent event. This part of parsing is in "long int get_coordinate(char *)" of "Naive_basic.cpp".
+
+
+Logs
+====
+
+Aug 8, 2014:
+
+I have tested all the listed parameters and the results of the program as carefully as possible by now. There are no obvious errors in the present release version. Working bench is Ubuntu 13.10 with GCC 4.8.1.
+
+
+Others
+======
+
+The simulators mentioned above:
+fastsimcoal2: http://cmpg.unibe.ch/software/fastsimcoal2/
+macs: https://code.google.com/p/macs/
+
+
+
+Contact
+=======
+
+If you have any problem (or suggestion) during using this program, please contact me: sdmorrisys@gmail.com
