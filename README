@@ -20,7 +20,6 @@ make naive
 Run:
 ./excutable -f TREE_FILE -F FORMAT -t TYPE -m CUTOFF -e EPSILON -d DISCRETIZATION -l LENGTH_OF_CHROMOSOME -T THREAD -o FILE_OUT
 
-
 1. TREE_FILE: This is the name of the tree file. If you choose to read trees from files, you must specify the file name. Otherwise (from stdin), you can simply ignore this parameter.
 
 2. FORMAT: This specifys the format of the tree. You must set this parameter when calling the program. 0 means "Nexus" format, and 1 means "Newick" format.
