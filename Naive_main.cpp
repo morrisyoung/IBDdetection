@@ -4,6 +4,7 @@
 // Naive_global.h
 // Naive_main.cpp Naive_main.h
 // Naive_chunk.cpp Naive_chunk.h
+// Naive_stdin.cpp Naive_stdin.h
 // Naive_parser.cpp Naive_parser.h
 // List.cpp List.h
 
@@ -299,6 +300,10 @@ int main(int argc, char * argv[])
         tree_stdin = (char *)malloc(sizeof(char) * stdin_buffer);
 
         tree_stdin[0] = '\0';
+
+        // FOR THE STDIN:
+        // we read one line (ended by '\n') one time; then drop that '\n' and continue
+        // there shuld not be an empty line if the trees are not ended, otherwise we will lose the following trees
         fscanf(stdin, "%[^\n]", tree_stdin);
         fscanf(stdin, "%c", &c);
         while(!tree_judge(tree_stdin))
@@ -313,7 +318,9 @@ int main(int argc, char * argv[])
     {
         FROMONE = 1;
         SAMPLE = parser_sample(tree);
-        TREELEN = (long int)(strlen(tree) * 1.2);  // I think coefficient 1.2 is enough for a tree   
+        // we don't fear there may be a very long line, because we will limit the line length read from the filehandle
+        // but this is not the case for lines from stdin; so we have a stdin_buffer
+        TREELEN = (long int)(strlen(tree) * 1.2);  // I think coefficient 1.2 is enough for a tree
     }
     else
     {

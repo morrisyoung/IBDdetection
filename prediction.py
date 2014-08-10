@@ -4,8 +4,8 @@ import sys
 
 
 # set the parameters, used to predict
-n = 1000
-l = 1
+n = 100
+l = 0.01
 N = 2000
 m = 0.0053
 filename = ""

@@ -45,6 +45,7 @@ Run:
 ###notes:
 1. If you don't specify a required parameter, you will get a reminder and the program then terminates.
 2. The parameters can simply be out of order.
+3. There should not be an empty line from the stdin if it has not actually ended.
 
 
 Examples:
@@ -88,6 +89,8 @@ Notes
 We don't care about the other parts of a whole tree file, meaning we judge a tree in a line only by the above method. If you have other type of recognition/standards, please adjust/supplement the "int tree_judge(char *)" function in "Naive_basic.cpp" according to your need, which is not very hard.
 
 But recognition of a tree for a line is only one thing. The other same important thing is that, the "Nexus" and "Newick" from these two simulators provide different marks for the present position in the chromosome. The "Nexus" provides the chromosome coordinate of the present coalescent event, but the "Newick" provides the segment length of the present coalescent event. This part of parsing is in "long int get_coordinate(char *)" of "Naive_basic.cpp".
+
+9. Of course you do not need to add new features to the program, because it may take you some time to get whole things work again. If there is a need, just send me a request and related examples, and I will do that if it's very tiny and won't change the structure of the whole program, and of course, is useful for your/other people's research.
 
 
 Logs
