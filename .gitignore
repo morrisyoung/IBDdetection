@@ -27,3 +27,8 @@
 
 # swp files
 *.swp
+
+
+# Python related source codes
+*.py
+
