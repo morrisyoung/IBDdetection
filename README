@@ -14,7 +14,6 @@ Usage
 Requirements:
 g++
 
-
 Compile:
 make naive
 
@@ -34,13 +33,11 @@ Run:
 
 6. DISCRETIZATION: We will process trees every x base pairs, where the x is exactly this DISCRETIZATION value. This parameter can speed up the detection process at the cost of sacrificing some precision, and at the same time the number of trees will be constant other than increasing with n/N. It's measured in unit of 1 bp.
 
-
 7. LENGTH_OF_CHROMOSOME: This is the length of the chromosome that you simulated, in unit of 1. This is necessary, both because in Nexus tree processing, we don't have such information, and because we need this value to divide the trees for different working threads in multi-threads running environment. Please specify this parameter as exactly what it is in the simulator you used.
 
 8. THREADS: You can specify the working threads by this parameter. The present limitation for the threading is 20, meaning you can't try a THREADS number larger than that.
 
 9. FILE_OUT: The output file name for the generated results. This is required no matter you read trees from tree file or stdin.
-
 
 ### notes:
 1. If you don't specify a required parameter, you will get a reminder and the program then terminates.
@@ -57,7 +54,6 @@ Examples:
 3.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | ./excutable -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
 
 Use macs to generate the trees, and directly pipe them into the IBD extraction program. Please refer to the manual of macs for more information about its parameters.
-
 
 4.  ./macs 100 1e6 -T -t .001 -r .001 -h 1e2 -R example_input/hotspot.txt -F example_input/ascertainment.txt 0 2>trees.txt | tee newick.txt | ./excutable -l 1000000 -F 1 -m 100000 -t 1 -e 0.000001 -T 1 -o result_newick.txt
 
@@ -109,7 +105,6 @@ Others
 The simulators mentioned above:
 fastsimcoal2: http://cmpg.unibe.ch/software/fastsimcoal2/
 macs: https://code.google.com/p/macs/
-
 
 
 Contact
