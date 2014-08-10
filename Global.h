@@ -32,7 +32,7 @@ extern int INPUTSRC;		// the source of the trees: tree file(0) or stdin(1)
 
 
 // the following are about the multi-threads
-extern pthread_t thread[10];  // we support at most 10 threads, because even a working station will
+extern pthread_t thread[20];  // we support at most 10 threads, because even a working station will
 						// always have at most about 10 cores
 extern pthread_mutex_t mut_read;  // mutex used by all the threads; used in reading the tree file
 extern pthread_mutex_t mut_write;  // mutex used by all the threads; used in saving the IBD segments into file
@@ -44,6 +44,7 @@ extern FILE * file_out;
 //extern vector<block_boundary_package> boundary_block;
 
 extern char filename[50];
+extern char filename_out[50];
 
 // the following will be used in the LCA(RMQ) algorithm; to avoid data transfer, we can make the global accessbie
 // they will be fixed after we know the SAMPLE size

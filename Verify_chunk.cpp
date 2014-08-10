@@ -95,6 +95,7 @@ char * block_finding(block_package * package, list<char *> * pool_pointer, FILE 
 
         // we should manually set the unchanged pairs here, because it still may be a segment even if the tMRCA between the
         // two trees are different
+        // basically this is for very small size of trees
         all_pairs_hash(tree_first, &(package->hashtable));
 
         return tree_last;
@@ -122,6 +123,7 @@ char * block_finding(block_package * package, list<char *> * pool_pointer, FILE 
                 package->end = get_coordinate(tree_last);
 
                 // prepare a new tree and judge whether or not the present block is the last block
+                coordinate = get_tree(filehandle, pool_pointer);
                 if(coordinate >= end_exp && package->chunk_num == THREADS)
                     package->last = 1;
                 else

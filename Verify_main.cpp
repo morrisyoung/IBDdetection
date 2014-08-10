@@ -64,7 +64,7 @@ int FORMAT = 0;
 int INPUTSRC = 0;
 
 // about multi-threading
-pthread_t thread[10];
+pthread_t thread[20];
 pthread_mutex_t mut_read;
 pthread_mutex_t mut_write;
 //vector<block_boundary_package> boundary_block; // we don't use boundary blocks any more
@@ -74,6 +74,7 @@ FILE * file_out;
 
 // input filename
 char filename[50];
+char filename_out[50];
 
 // RMQmode related (LCA preparation)
 int BLOCK_NUM;
@@ -109,6 +110,7 @@ int main(int argc, char * argv[])
     // if there is a need, we changed the following variables: (according to the input parameters)
     // some of them are necessary to initialize
     // TOLERANCE; THREADS; CUTOFF; DISCRETIZATION; CLENGTH; FORMAT; INPUTSRC; filename[50]
+    // something necessary: filename; filename_out
 
     // command line format: ./IBDReport -f TREE_FILE -F FORMAT -t TYPE -m CUTOFF -e EPSILON -d DISCRETIZATION -l LENGTH_OF_CHROMOSOME
     int i;
@@ -136,6 +138,14 @@ int main(int argc, char * argv[])
                         count++;
                         i = 0;
                         while((filename[i]=argv[count][i]) != '\0')
+                            i++;
+                        break;
+                    }
+                    case 'o':
+                    {
+                        count++;
+                        i = 0;
+                        while((filename_out[i]=argv[count][i]) != '\0')
                             i++;
                         break;
                     }
@@ -185,9 +195,9 @@ int main(int argc, char * argv[])
     }
 
     // the output filehandle
-    char buffer[50];
-    sprintf(buffer, "%s%s", "result_verify_", filename);
-    file_out = fopen(buffer, "w");
+    //char buffer[50];
+    //sprintf(buffer, "%s%s", "result_verify_", filename);
+    file_out = fopen(filename_out, "w");
 
     // at last we run the prepare()
     prepare();
@@ -210,7 +220,7 @@ int main(int argc, char * argv[])
     {
         printf("tree file name: %s\n", filename);
     }
-    printf("result saved as: result_verify_%s\n", filename);
+    printf("result saved as: %s\n", filename_out);
     printf("========================================================================\n");
     printf("Now the program begins...\n");
 
@@ -245,7 +255,7 @@ int main(int argc, char * argv[])
         //=================== start the first (and the only) chunk here ====================
         chunk_level((void *)&package[0]);
 
-        // we don't need to exrtact
+        // we don't need to extract
         //chunk_merge(package, 0);
 
         cout << "The sequential work ends here!" << endl;

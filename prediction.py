@@ -4,24 +4,24 @@ import sys
 
 
 # set the parameters, used to predict
-n = 100
-l = 0.01
+n = 1000
+l = 1
 N = 2000
-m = 0.0053
+m = 0.01
 filename = ""
 
 
 if __name__ == "__main__":
 
-
-	if len(sys.argv[1:]) != 3:
-		print "Please enter \"CLENGTH\", \"CUTOFF\" and \"filename\" in order ... "
-		print "default values:"
-		print "100,000,000 1,000,000 xxx"
-		sys.exit()
-	CLENGTH = int(sys.argv[1])
-	CUTOFF = int(sys.argv[2])
-	filename = sys.argv[3]
+	
+	#if len(sys.argv[1:]) != 3:
+	#	print "Please enter \"CLENGTH\", \"CUTOFF\" and \"filename\" in order ... "
+	#	print "default values:"
+	#	print "100,000,000 1,000,000 xxx"
+	#	sys.exit()
+	#CLENGTH = int(sys.argv[1])
+	#CUTOFF = int(sys.argv[2])
+	filename = sys.argv[1]
 
 
 

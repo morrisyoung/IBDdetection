@@ -163,11 +163,11 @@ void block_level(long int * table, double * table_tMRCA, block_package * previou
 	//cout << can_list1.size() << endl;
 	//cout << can_list2.size() << endl;
 
+	// get a tree from the pool
+	tree = (*pool).front();
+	coordinate = get_coordinate(tree);
 	while(1)	// FCFS model for the pool of trees
 	{
-		// get a tree from the pool
-		tree = (*pool).front();
-		coordinate = get_coordinate(tree);
 		// now I have all the trees and I can begin verifying.
 
 		//====== LCA pre-processing ======
@@ -279,17 +279,24 @@ void block_level(long int * table, double * table_tMRCA, block_package * previou
 			}
 		}
 
-		// test whether or not this is the last coordinate in this block
+		// get a new qualified tree from the pool; but if it is already the last tree, use it
 		if(coordinate == present->end)
-		{
 			break;
-		}
-		else
+
+		long int coordinate_temp = coordinate;
+		while(1)
 		{
 			free(tree);
 			(*pool).pop_front();
-			continue;
+			tree = (*pool).front();
+			coordinate = get_coordinate(tree);
+			// test whether or not this is the last coordinate in this block
+			if(coordinate == present->end)
+				break;
+			if(coordinate - coordinate_temp > DISCRETIZATION)
+				break;
 		}
+
 	}
 	//================================== verification done ==================================
 

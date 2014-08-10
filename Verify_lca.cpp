@@ -14,7 +14,7 @@
 // Jul 24
 // this is for verification algorithm, which means that we don't need to package it into a class
 // and exactly due to this reason, I seperate this file out as Verify_lca.cpp,
-// because I know for the binary algorithm, I will need to kind of package it into a class
+// because I know for the binary algorithm, I will need to package it into a class
 
 
 #include <math.h>
