@@ -23,3 +23,7 @@
 
 # Trees and the results related
 *.trees
+
+
+# swp files
+*.swp
