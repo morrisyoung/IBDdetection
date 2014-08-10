@@ -20,15 +20,15 @@
 *.out
 *.app
 
-
 # Trees and the results related
 *.trees
-
 
 # swp files
 *.swp
 
-
 # Python related source codes
 *.py
 
+# Generated programs
+IBDdetection_naive
+IBDdetection_verify
