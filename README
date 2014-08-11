@@ -67,7 +67,7 @@ Notes
 
 3. Although the package contains the source codes of the implementation of an upgraded algorithm, it's not a release version. If you are really interesting in that algorithm and implementation, feel free to read the algorithm and source codes, and try that version.
 
-4. Presently we don't support the exponential format of the <double> number (for tMRCA in the trees). If in the future there is a need, it will be easy to update that part of the program ("double string_double(char *)" in "Naive_basic.cpp").
+4. Presently we don't support the exponential format of the float number (for tMRCA in the trees). If in the future there is a need, it will be easy to update that part of the program ("double string_double(char *)" in "Naive_basic.cpp").
 
 5. Also, we have not yet supported the exponential format of the program parameters (like -e EPSILON).
 
