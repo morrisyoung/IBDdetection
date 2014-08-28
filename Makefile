@@ -12,6 +12,7 @@ OBJS_VERIFY=	Verify_main.o Verify_chunk.o Verify_block.o Verify_lca.o Parser.o L
 EXECUTABLE_NAIVE=	IBDdetection_naive
 EXECUTABLE_VERIFY=	IBDdetection_verify
 
+# this is for testing
 # this is only a reminder if the user want to "make all"
 all:
 	@echo Please choose from \"make naive\", \"make binary\" and \"make verify\" to compile and link...
