@@ -279,23 +279,24 @@ void block_level(long int * table, double * table_tMRCA, block_package * previou
 			}
 		}
 
-		// get a new qualified tree from the pool; but if it is already the last tree, use it
-		if(coordinate == present->end)
-			break;
 
-		long int coordinate_temp = coordinate;
-		while(1)
-		{
-			free(tree);
-			(*pool).pop_front();
-			tree = (*pool).front();
-			coordinate = get_coordinate(tree);
-			// test whether or not this is the last coordinate in this block
-			if(coordinate == present->end)
-				break;
-			if(coordinate - coordinate_temp > DISCRETIZATION)
-				break;
-		}
+        // get a new qualified tree from the pool; but if it is already the last tree, use it
+        if(coordinate == present->end)
+            break;
+
+        long int coordinate_temp = coordinate;
+        while(1)
+        {
+            free(tree);
+            (*pool).pop_front();
+            tree = (*pool).front();
+            coordinate = get_coordinate(tree);
+            // test whether or not this is the last coordinate in this block
+            if(coordinate == present->end)
+                break;
+            if(coordinate - coordinate_temp > DISCRETIZATION)
+                break;
+        }
 
 	}
 	//================================== verification done ==================================
