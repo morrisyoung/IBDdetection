@@ -87,6 +87,7 @@ unordered_map<string, unordered_map<string, int>> MODE_BLOCK_LAST;
 
 //DEBUG
 long int TEST = 0;   // test the number of trees in discretization case
+pthread_mutex_t mut_count;
 
 
 //================================================================================
@@ -266,7 +267,9 @@ int main(int argc, char * argv[])
         //chunk_merge(package, 0);
 
         cout << "The sequential work ends here!" << endl;
-        cout << TEST << endl;
+
+        //DEBUG
+        printf("The total processed trees are %ld\n", TEST);
 
         //=================== free all the global space ====================
         for(int i = 0; i < THREADS; i++)

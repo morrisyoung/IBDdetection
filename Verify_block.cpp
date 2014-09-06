@@ -166,12 +166,21 @@ void block_level(long int * table, double * table_tMRCA, block_package * previou
 	// get a tree from the pool
 	tree = (*pool).front();
 	coordinate = get_coordinate(tree);
+
+	// used for the new discretization algorithm
+	// Sep.5 2014
+	long int THRESHOLD = coordinate;
+
 	while(1)	// FCFS model for the pool of trees
 	{
 
 		//DEBUG
-		TEST++;
-
+		if(!(coordinate == present->end && present->last != 1))
+		{
+			pthread_mutex_lock(&mut_count);
+			TEST++;
+	        pthread_mutex_unlock(&mut_count);
+		}
 
 
 		// now I have all the trees and I can begin verifying.
@@ -285,12 +294,11 @@ void block_level(long int * table, double * table_tMRCA, block_package * previou
 			}
 		}
 
-
         // get a new qualified tree from the pool; but if it is already the last tree, use it
         if(coordinate == present->end)
             break;
 
-        long int coordinate_temp = coordinate;
+        THRESHOLD += DISCRETIZATION;
         while(1)
         {
             free(tree);
@@ -300,7 +308,7 @@ void block_level(long int * table, double * table_tMRCA, block_package * previou
             // test whether or not this is the last coordinate in this block
             if(coordinate == present->end)
                 break;
-            if(coordinate - coordinate_temp > DISCRETIZATION)
+            if(coordinate >= THRESHOLD)
                 break;
         }
 

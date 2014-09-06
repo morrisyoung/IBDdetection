@@ -55,7 +55,9 @@ extern unordered_map<string, unordered_map<string, int>> MODE_BLOCK;
 extern unordered_map<string, unordered_map<string, int>> MODE_BLOCK_LAST;
 
 
+//DEBUG
 extern long int TEST;	// test the number of trees in discretization case
+extern pthread_mutex_t mut_count;
 
 
 #endif
