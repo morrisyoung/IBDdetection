@@ -168,6 +168,12 @@ void block_level(long int * table, double * table_tMRCA, block_package * previou
 	coordinate = get_coordinate(tree);
 	while(1)	// FCFS model for the pool of trees
 	{
+
+		//DEBUG
+		TEST++;
+
+
+
 		// now I have all the trees and I can begin verifying.
 
 		//====== LCA pre-processing ======

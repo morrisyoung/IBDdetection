@@ -49,6 +49,10 @@ extern char * tree_stdin;	// used for the global memory space of the tree from s
 extern long int stdin_buffer;	// the buffer size of stdin (the maximum possible length of each line from the stdin)
 
 
+//DEBUG
+extern long int TEST;	// used to test the number of processed trees in discretization case
+extern pthread_mutex_t mut_count;  // to protect the above variable
+
 #endif
 
 // end of Global.h

@@ -124,7 +124,12 @@ void * chunk_level(void * p)
     //===================== here we go: the LOOP ======================
     // we don't test the present first tree
     // get a new tree and its coordinate; but we should use the DISCRETIZATION to judge
-    coordinate_temp = coordinate_current;
+
+    // Sep.5: (as the number of trees under the present algorithm is not constant, we will make some changes)
+    // we will use the pre-defined threshold to find the next tree, other than find the next D farther tree
+
+
+    long int THRESHOLD = coordinate_current + DISCRETIZATION;
     while(1)    // until we have the next right tree
     {
         pthread_mutex_lock(&mut_read);
@@ -148,7 +153,7 @@ void * chunk_level(void * p)
             seg_len_last = coordinate;
         }
 
-        if(coordinate_current - coordinate_temp >= DISCRETIZATION)break;
+        if(coordinate_current >= THRESHOLD)break;
     }
 
     // #######################################################
@@ -157,6 +162,13 @@ void * chunk_level(void * p)
     long int count = 1;
     while(coordinate_current < end_exp)
     {
+
+        //DEBUG
+        pthread_mutex_lock(&mut_count);
+        TEST++;
+        pthread_mutex_unlock(&mut_count);
+
+
         naive_update(coordinate_current, tree, table_coordinate, table_tMRCA);
         //===== test =====
         count ++;
@@ -164,7 +176,7 @@ void * chunk_level(void * p)
             printf("thread#%d has processed %ld trees.\n", package->seq, count);
 
         // get a tree; if there are no more trees (the end for all the trees): break
-        coordinate_temp = coordinate_current;
+        THRESHOLD = THRESHOLD + DISCRETIZATION;
 
         // ### there are 4 possible exits for the following loop ###
         // 1. find the next tree and it's still within end_exp
@@ -206,7 +218,7 @@ void * chunk_level(void * p)
                 seg_len_last = coordinate;
             }
 
-            if(coordinate_current - coordinate_temp >= DISCRETIZATION)break;
+            if(coordinate_current >= THRESHOLD)break;
         }
 
         // the only judgement to jump out this loop is always "coordinate_current >= end_exp"; so do nothing here
@@ -214,7 +226,15 @@ void * chunk_level(void * p)
     }
 
     if(THREADS != 1 && package->seq != THREADS)  // there is one more tree
+    {
+        //DEBUG
+        pthread_mutex_lock(&mut_count);
+        TEST++;
+        pthread_mutex_unlock(&mut_count);
+
+        
         naive_update(coordinate_current, tree, table_coordinate, table_tMRCA);
+    }
 
     //===== free the local heap memory ======
     free(tree);

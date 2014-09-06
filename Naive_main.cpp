@@ -56,7 +56,7 @@
 #include "Naive_basic.h"
 #include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
 #include "Naive_stdin.h"
-
+    
 
 //========================== global variable definition ==========================
 // the following are the default value of all the global variables
@@ -92,6 +92,13 @@ int FROMONE;
 char * tree_stdin;
 
 long int stdin_buffer = 300000;
+
+
+//DEBUG
+long int TEST = 0;
+pthread_mutex_t mut_count;  // to protect the above variable
+
+
 //================================================================================
 
 
@@ -396,6 +403,13 @@ int main(int argc, char * argv[])
 
             printf("The sequential work ends here!\n");
 
+
+
+            //DEBUG
+            printf("The total processed trees are %ld\n", TEST+1);
+
+
+
             //=================== free all the global space for chunks ====================
             for(int i = 0; i < THREADS; i++)
             {
@@ -453,6 +467,12 @@ int main(int argc, char * argv[])
             printf("The end bp of the chromosome: %ld\n", CLENGTH);
 
             printf("All the working threads finish now!! Program terminates ...\n");
+
+
+
+            //DEBUG
+            printf("The total processed trees are %ld\n", TEST+1);
+
 
             //=================== free all the global space ====================
             for(int i = 0; i < THREADS; i++)

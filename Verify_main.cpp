@@ -82,6 +82,13 @@ int BLOCK_SIZE;
 int BLOCK_SIZE_LAST;
 unordered_map<string, unordered_map<string, int>> MODE_BLOCK;
 unordered_map<string, unordered_map<string, int>> MODE_BLOCK_LAST;
+
+
+
+//DEBUG
+long int TEST = 0;   // test the number of trees in discretization case
+
+
 //================================================================================
 
 
@@ -259,6 +266,7 @@ int main(int argc, char * argv[])
         //chunk_merge(package, 0);
 
         cout << "The sequential work ends here!" << endl;
+        cout << TEST << endl;
 
         //=================== free all the global space ====================
         for(int i = 0; i < THREADS; i++)

@@ -55,6 +55,9 @@ extern unordered_map<string, unordered_map<string, int>> MODE_BLOCK;
 extern unordered_map<string, unordered_map<string, int>> MODE_BLOCK_LAST;
 
 
+extern long int TEST;	// test the number of trees in discretization case
+
+
 #endif
 
 // end of Global.h
