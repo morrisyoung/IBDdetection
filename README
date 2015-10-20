@@ -92,6 +92,9 @@ But recognition of a tree for a line is only one thing. The other same important
 Logs
 ====
 
+Oct.19, 2015:
+There is a bug for naive program reading trees from stdin (Macs). It comes from the fact that the buffer size for stdin is not enough. When the chromosome length is very long, there is one line in the output that scales with that, so a small buffer will not hold it and segmentation fault happens. Now I set the buffer size for stdin as 500,000,000 char length, which is tested to be enough for 100Mb chromosome.
+
 Sep 7, 2014:
 There are some problems about the discretization algorithm found in our speed testing (though it won't affect the correctness of the program), and by now I have resolved them.
 
