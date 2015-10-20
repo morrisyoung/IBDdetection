@@ -91,7 +91,7 @@ int FROMONE;
 
 char * tree_stdin;
 
-long int stdin_buffer = 300000;
+long int stdin_buffer = 500000000;
 
 
 //DEBUG
